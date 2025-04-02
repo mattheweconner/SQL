@@ -160,7 +160,7 @@ ON r.hotel = h.hotel_id
 WHERE r.dinner_rsvp = 1
 ORDER BY v.last_name ASC;
 
-3.)  Show VIPs, their hotel details, and the event they’re attending
+3.)  Show VIPs, their hotel details, and the event they’re attending.
       -In this query, I used multiple INNER JOINs to connect vips, reservations, hotels, and events
       -retrieved each VIP’s name, the hotel name and address, and the event name
       -ordered the output by last name
