@@ -59,7 +59,7 @@ VALUES
 
 
 
---In this exercise I wanted to know which company has 10 weeks or more maternity leave and  20 or more days pto.
+1.)  In this exercise I wanted to know which company has 10 weeks or more maternity leave and  20 or more days pto.
 
 SELECT company_name, maternity_leave_weeks, paid_time_off_days
 FROM fortune_companies
@@ -67,13 +67,13 @@ WHERE maternity_leave_weeks >= 10
 AND paid_time_off_days >= 20
 ;
 
---I asked myself a question in this exeample. What is the average number of PTO days and create a new column as average_paid_time_off? 
+2.)  What is the average number of PTO days and create a new column as average_paid_time_off? 
 
 SELECT AVG(paid_time_off_days) AS average_paid_time_off
-, ROUND(AVG(paid_time_off_days), 1)
+, ROUND(AVG(paid_time_off_days), 1) AS average_rounded_paid_time_off
 FROM fortune_companies;
 
---I was having fun with this exercise. I categorized the amount of days off in 4 seperate ranges and labeled them accordingly. I also created a new column called pto_category.
+3.)  I categorized the amount of days off in 4 separate ranges and labeled them accordingly. I also created a new column called pto_category.
 
 SELECT company_name, paid_time_off_days
 , CASE
@@ -84,17 +84,20 @@ ELSE 'Poor'
 END AS pto_category
 FROM fortune_companies;
 
---In this example, I wanted to see who had the best benefits in this data set. My cutoff values where 18 days for pto and 9 weeks for maturnity leave. I also wanted to only include the companies with health insurance.
+4.)  I wanted to see which industry had an average PTO of at least 18 days, average maternity leave of at least 9 weeks, and every company offers healthcare?
 
-SELECT  company_name, paid_time_off_days, maternity_leave_weeks  ,healthcare_benefits
+SELECT industry,
+AVG(paid_time_off_days) AS avg_pto,
+AVG(maternity_leave_weeks) AS avg_maternity_leave,
+MIN(healthcare_benefits) AS all_have_healthcare
 FROM fortune_companies
-WHERE paid_time_off_days >= 18
-AND maternity_leave_weeks >= 9
-GROUP BY company_name
-HAVING healthcare_benefits = 1;
+GROUP BY industry
+HAVING AVG(paid_time_off_days) >= 18
+AND AVG(maternity_leave_weeks) >= 9
+AND MIN(healthcare_benefits) = 1;
 
 
---In this exercise I categorized the companies based on there average employee tenure. I included a CASE statement and created a new column.
+5.)  In this exercise I categorized the companies based on there average employee tenure. I included a CASE statement and created a new column.
 
 SELECT company_name, avg_employee_tenure
 , CASE 
