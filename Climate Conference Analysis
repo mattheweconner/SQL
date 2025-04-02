@@ -126,8 +126,8 @@ INSERT INTO hotels VALUES
 
 
 1.)  Find all VIPs and their hotel reservations?  
-      -I used a LEFT JOIN to include all VIPs, even those without reservations, then I Joined three tables: vips, reservations, and hotels. 
-      -I then displayed VIP name, organization, and hotel name (if reserved)
+      -I used a LEFT JOIN to include all VIPs, even those without reservations, then I Joined three tables: vips, reservations, and hotels
+      -then displayed VIP name, organization, and hotel name (if reserved)
       -Finally, I Ordered alphabetically by VIP last name
 
 SELECT vips.last_name,
