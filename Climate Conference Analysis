@@ -145,8 +145,8 @@ ORDER BY vips.last_name ASC;
 2.)   Find VIPs who RSVP’d to the dinner and the hotel they’re staying at?
        -In this example, I used INNER JOINs between vips, reservations, and hotels
        -filtered for only those with dinner_rsvp = 1 (attending the dinner)
-       -With the SELECT command, I displayed each VIP’s name and the hotel they’re staying at
-       -Ordered the results by last name
+       -with the SELECT command, I displayed each VIP’s name and the hotel they’re staying at
+       -ordered the results by last name
        -used aliases to keep the query clean and readable
 
 SELECT v.last_name,
