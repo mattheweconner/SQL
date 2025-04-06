@@ -1,0 +1,111 @@
+
+-- I downloaded a dataset of Spotify track data from Kaggle.
+
+-- Created a relational database table using SQLiteStudio to structure and store the data.
+
+-- Imported the dataset from a .csv file into the database.
+
+-- Wrote SQL queries to analyze song attributes like popularity, danceability, energy, and artist performance.
+
+-- Answered five business-relevant questions using SQL techniques like GROUP BY, subqueries, CASE statements, and aggregation functions.
+
+Note: The SQL table structure was originally referenced from the Break Into Tech course and adapted for use in this project.
+
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+
+1.)  Which songs are both more popular than average and at least moderately danceable?
+ --  Identify songs that have a popularity above the average for all tracks 
+ --  have a danceability score greater than 0.5
+ --  Show the artist name, popularity, and danceability, and sort the results by increasing popularity.
+
+SELECT artist_name , popularity, danceability
+FROM BIT_DB.Spotifydata
+WHERE popularity >= (SELECT AVG(popularity) as avg_popularity
+FROM BIT_DB.Spotifydata)
+AND danceability > 0.6
+ORDER BY popularity ASC;
+
+
+2.)  What are the 10 most popular tracks overall?
+  -- Get the 10 tracks with the highest popularity scores 
+  -- Include the track name, artist name, and popularity score
+  -- Sort them in descending order of popularity.
+  
+SELECT track_name, artist_name, popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC LIMIT 10;
+
+
+
+3.)  Which artists have the highest average popularity based on all their songs?
+  -- For each artist, calculate their average song popularity by dividing the total popularity score of all their tracks by the number of tracks they have 
+  -- Return the top 10 artists with the highest average popularity.
+
+SELECT artist_name, SUM(popularity) / COUNT(artist_name) as avg_popularity
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY SUM(popularity) / COUNT(artist_name) DESC LIMIT 10;
+
+
+4.)  Danceability vs Energy Groupings
+   A.) Categorize songs based on their danceability and energy levels:
+    Danceability:
+      -- 0.8 or higher = “Very Danceable”
+      -- 0.6 to 0.79 = “Danceable”
+      -- Below 0.6 = “Less Danceable”
+   Energy:
+      -- 0.8 or higher = “High Energy”
+      -- 0.5 to 0.79 = “Medium Energy”
+      -- Below 0.5 = “Low Energy”
+   B.)  Count how many songs fall into each combination of danceability and energy categories.
+  
+SELECT  (CASE WHEN danceability >= 0.8 THEN 'Very Danceable'
+WHEN danceability >= 0.6 THEN 'Danceable'
+ELSE 'Less Danceable'
+END) as danceable_group,
+(CASE WHEN energy >= 0.8 THEN 'High Energy'
+WHEN energy >= 0.5 THEN 'Medium Energy'
+ELSE 'Low Energy'
+END) as energy_group, COUNT(*) as song_count
+FROM BIT_DB.Spotifydata 
+GROUP BY CASE WHEN danceability >= 0.8 THEN 'Very Danceable'
+WHEN danceability >= 0.6 THEN 'Danceable'
+ELSE 'Less Danceable'
+END,
+CASE WHEN energy >= 0.8 THEN 'High Energy'
+WHEN energy >= 0.5 THEN 'Medium Energy'
+ELSE 'Low Energy'
+END;
+  
+
+5.)  Does energy level correlate with popularity?
+  -- Group songs by their energy levels (rounded to the nearest 0.1)
+  -- For each energy group, calculate the average popularity 
+  -- Order the results by energy level to see if there's a trend between how energetic a song is and how popular it tends to be.
+  
+SELECT ROUND(energy,1) as energy, SUM(popularity) / COUNT(energy) as avg_popularity
+FROM BIT_DB.Spotifydata
+GROUP BY ROUND(energy,1)
+ORDER BY ROUND(energy,1) ASC;
