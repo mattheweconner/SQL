@@ -1,5 +1,12 @@
+ProjectGoals:
+    - Write clear and efficient SQL queries to answer business-style questions
+    - Explore relationships between customers, employees (sales agents), and purchases
+    - Analyze invoice data by date, region, and artist
+    - Practice various types of SQL joins (INNER, LEFT)
+    - Use filtering, aggregation, and string manipulation to cleanly format results
 
-
+Data Used:
+    - chinook.db: The SQLite database file (not committed to GitHub due to size)
 
 
 
