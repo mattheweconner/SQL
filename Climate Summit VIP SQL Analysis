@@ -122,6 +122,11 @@ INSERT INTO hotels VALUES
  ;
 
 
+Designed and executed a series of SQL queries to analyze VIP event participation, hotel accommodations, and organizational insights.
+Employed various join types (INNER, LEFT, SELF) to explore relationships between VIPs, reservations, hotels, and events. 
+Key tasks included identifying hotel stays for all VIPs, filtering dinner attendees, linking feedback relationships through self-joins, and 
+calculating membership trends using subqueries. Aggregated and filtered group data to highlight organizational attendance patterns. 
+Prioritized query clarity and performance with aliasing, clean formatting, and logical ordering.
 
 
 
